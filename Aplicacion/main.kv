@@ -1,0 +1,150 @@
+#: include dashboard.kv
+# include firstscreen.kv
+#: include kv/settingsscreen.kv
+#: include kv/sugerenciasscreen.kv
+#: include kv/mapacomercios.kv
+#: include kv/reportegastos.kv
+#:include kv/inventa/inventario.kv
+# include kv/inventa/listacom.kv
+
+NavigationLayout:
+    id: nav_layout
+    ScreenManager:
+    
+        Screen:
+        
+            BoxLayout:
+                orientation: 'vertical'
+            
+                MDToolbar:
+                    title: app.title
+                    elevation: 10
+                    left_action_items: [["menu", lambda x: nav_drawer.set_state() ]]
+                
+                ScreenManager:
+                    id: screen_manager
+                    
+                    DashBoard:
+                        id: dasboard
+                        name : "dashboard"
+                    
+                    SettingsScreen:
+                        id: settings_screen
+                        name: "settings_screen"
+                    
+                    FirstScreen:
+                        id: first_screen
+                        name: "first_screen"
+                        
+                    SugerenciasScreen:
+                        id: sugerencias_screen
+                        name: "sugerencias_screen"
+
+                    MapaComercios:
+                        id: mapa_comercios
+                        name: "mapa_comercios"
+
+                    ReporteGastos:
+                        id: reporte_gastos
+                        name: "reporte_gastos"
+
+                    Inventario:
+                        id: inventario_screen
+                        name: "inventario_screen"
+                
+    
+    MDNavigationDrawer:
+        id: nav_drawer
+        
+        BoxLayout:
+            orientation: 'vertical'
+            padding: "8dp"
+            spacing: "8dp"
+            
+            Image:
+                size_hint: None, None
+                size: "150dp", "150dp"
+                
+                source: "imagenes/icono.png"
+                
+            ScrollView:
+            
+                MDList:
+                            
+                    OneLineIconListItem:
+                        text: "Ajustes"
+                        on_release:
+                            screen_manager.current = "settings_screen"
+                            nav_drawer.set_state()
+                            
+                        IconLeftWidget:
+                            icon: "settings"  
+                            
+                    OneLineIconListItem:
+                        text: "Convertidor"
+                        on_release:
+                            screen_manager.current = "dashboard"
+                            nav_drawer.set_state()
+                            
+                        IconLeftWidget:
+                            icon: "view-dashboard"      
+                    
+                    
+                    OneLineIconListItem:
+                        text: "Comparador Precios"
+                        on_release:
+                            screen_manager.current = "first_screen"
+                            nav_drawer.set_state()
+                            
+                        IconLeftWidget:
+                            icon: "cart"
+                            
+                    OneLineIconListItem:
+                        text: "Sugerencias"
+                        on_release:
+                            screen_manager.current = "sugerencias_screen"
+                            nav_drawer.set_state()
+                            
+                        IconLeftWidget:
+                            icon: "head-cog"
+
+                    OneLineIconListItem:
+                        text: "Mapa Comercios"
+                        on_release:
+                            screen_manager.current = "mapa_comercios"
+                            nav_drawer.set_state()
+
+                        IconLeftWidget:
+                            icon: "map-legend"
+
+
+                    OneLineIconListItem:
+                        text: "Reporte de Gastos"
+                        on_release:
+                            screen_manager.current = "reporte_gastos"
+                            nav_drawer.set_state()
+
+                        IconLeftWidget:
+                            icon: "cash-multiple"
+
+                    OneLineIconListItem:
+                        text: "Inventario"
+                        on_release:
+                            screen_manager.current = "inventario_screen"
+                            nav_drawer.set_state()
+
+                        IconLeftWidget:
+                            icon: "view-dashboard"
+
+                   # OneLineIconListItem:
+                    #    text: "Lisa de Compras"
+                     #   on_release:
+                      #      screen_manager.current = "lis_screen"
+                       #     nav_drawer.set_state()
+
+                        #IconLeftWidget:
+                         #   icon: "list"
+
+                            
+                            
+                    

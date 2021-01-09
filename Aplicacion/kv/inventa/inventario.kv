@@ -1,0 +1,451 @@
+<Inventario>:
+    id: inventario_screen
+    name: "inventario_screen"
+
+
+<DataWid_Cat>:
+
+    dataCat: ''
+    dataCat_id: ''
+
+    canvas:
+        Color:
+            rgb: 1,0.7,1 #rosa
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Button:
+        size_hint: 0.9, 1
+        size_font: self.width*0.2
+        #text: 'Inventarios encontrados'
+        text: root.dataCat
+        on_press:
+            app.el_idca = root.dataCat_id
+            print (app.el_idca)
+            root.database_produ()
+
+
+    Button:
+        size_hint: 0.3, 1
+        text:'edit'
+        on_press: root.update_data_Cat(root.dataCat_id)
+
+
+<CategoriasWid>
+    canvas:
+        Color:
+            #rgb: 1,0.7,1 #rosa
+            rgb: (242/255, 244/255, 244/255)
+        Rectangle:
+            size: (500,550)
+            #pos: self.pos
+            pos: (150, 0 )
+
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: 'Categorias'
+            halign: 'center'
+            color: (0,128/255,0, 220/255)
+            size_hint_y: None
+
+
+        ScrollView:
+            GridLayout:
+                id: container
+                size: (650,300)
+                #padding_left, padding_top, padding_right, padding_bottom].
+                padding: [160,0,100,50]
+                spacing: 5
+                size_hint: None,None
+                cols: 1
+                row_default_height: 70 #root.height*0.2
+                height: self.minimum_height
+
+        FloatLayout:
+            size_hint: None,None
+            size: (500,25)
+            pos: (150,10)
+
+<NuevoCatButton>
+    text: '+'
+    on_press: self.create_new_categoria()
+
+# Sin esta propiedad no funciona
+<LeftLabel@Label>:
+    text_size: self.size
+    halign: 'center'
+    pos_hint: {'center_x':0.5,'center_y':0.65}
+
+<MessagePopup>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: message
+            size_hint: 1,0.8
+            text: ''
+        Button:
+            size_hint: 1,0.2
+            text: 'Regresar'
+            on_press: root.dismiss()
+
+<InsertCatWid>:
+    orientation: 'vertical'
+    hoy: ''
+    canvas:
+        Color:
+            rgb: (172/255,165/255,163/255)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    MDLabel:
+        text: "Agregar Categoria"
+        pos_hint: {'center_x':0.5}
+        halign: "center"
+        font_style: "Subtitle1"
+
+    MDFillRoundFlatButton:
+        text: "Nombre:"
+        size_hint: (0.2,.7)
+        pos_hint: {'center_x':0.2}
+        id: id_insert_V_nom
+        on_release: root.voz_boton('NombreC')
+
+    TextInput:
+        id: insertarcategoria_Nombre
+        multiline: False
+        hint_text: 'Nombre Categoria'
+        mode: "rectangle"
+        size_hint: (0.4,.7)
+        pos_hint: {'center_x': .55}
+
+    MDFillRoundFlatButton:
+        text: "Descripcion:"
+        size_hint: (0.2,.7)
+        pos_hint: {'center_x':0.2}
+        id: id_insert_V_des
+        on_release: root.voz_boton('DescripC')
+
+    TextInput:
+        id: insertarcategoria_Descripcion
+        multiline: True
+        hint_text: 'Descripcion Categoria'
+        mode: "rectangle"
+        size_hint: (0.4,.7)
+        pos_hint: {'center_x':0.55,'center_y':0.4}
+
+    MDFillRoundFlatButton:
+        text: "Fecha:"
+        size_hint: (0.2,.7)
+        pos_hint: {'center_x':0.2}
+
+    TextInput:
+        id: insertarcategoria_Fecha
+        multiline: True
+        hint_text: root.hoy
+        mode: "rectangle"
+        size_hint: (0.4,.7)
+        pos_hint: {'center_x':0.55,'center_y':0.2}
+
+    BoxLayout:
+        size_hint_y: 2
+    BoxLayout: # ---------- Crear Salir
+        Button:
+            text: 'Crear'
+            on_press:
+                root.insertcat()
+        Button:
+            text: 'Salir'
+            on_release: root.back_to_dbw()
+
+<UpdateDataCateWid>:
+    orientation: 'vertical'
+    dataCat_id: ''
+    canvas:
+        Color:
+            rgb: (172/255,165/255,163/255)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    MDLabel:
+        id: elidcategory
+        text: "ID categoria:" + root.dataCat_id
+        padding_x: 150
+    MDLabel:
+        text: "Actualizar Categoria"
+        pos_hint: {'center_x':0.5}
+        halign: "center"
+        font_style: "Subtitle1"
+
+    MDLabel:
+        text: ' Nombre:'
+        padding_x: 150
+        padding_y: 20
+
+    TextInput:
+        id: insertarcategoria_Nombre
+        multiline: False
+        hint_text: 'Nombre Categoria'
+        mode: "rectangle"
+        size_hint: (0.5,.7)
+        pos_hint: {'center_x':0.5,'center_y':0.4}
+
+    MDLabel: # ---------- Nombre
+        text: ' Descripción:'
+        padding_x: 150
+        padding_y: 20
+    TextInput:
+        id: insertarcategoria_Descripcion
+        multiline: True
+        hint_text: 'Descripción Categoria'
+        mode: "rectangle"
+        size_hint: (0.5,.7)
+        pos_hint: {'center_x':0.5,'center_y':0.4}
+
+    BoxLayout:
+        size_hint_y: 4
+    BoxLayout:
+        Button:
+            text: 'Actualizar'
+            on_press: root.update_data_Cat()
+        Button:
+            text: 'Eliminar'
+            on_press: root.delete_data_Cat()
+    Button: # ---------- Actualizar, Salir
+        text: 'Salir'
+        on_press: root.back_to_dbw_cat()
+
+
+
+
+
+
+<DataWid_Pro>:
+    dataPro: ''
+    dataPro_id: ''
+
+    canvas:
+        Color:
+            rgb: 0.2,0.2,0.2
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        size_hint: 0.9, 0.9
+        size_font: self.width*0.7
+        #text: 'Inventarios encontrados'
+        text: root.dataPro
+        #on_press: root.database_catego()
+    Button:
+        size_hint: 0.3, 1
+        text:'edit'
+        on_press: root.update_data_Pro(root.dataPro_id)
+
+
+
+<ProductosWid>:
+    id: productowid
+    canvas:
+        Color:
+            #rgb: 1,0.7,1 #rosa
+            rgb: (242/255, 244/255, 244/255)
+        Rectangle:
+            size: (500,550)
+            #pos: self.pos
+            pos: (150, 0 )
+
+
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: 'Productos'
+            halign: 'center'
+            color: (0,128/255,0, 220/255)
+            size_hint_y: None
+            pos_hint_y : .9
+
+
+        ScrollView:
+            GridLayout:
+                id: container
+                size: (650,300)
+                #padding_left, padding_top, padding_right, padding_bottom].
+                padding: [170,0,100,50]
+                spacing: 5
+                size_hint: None,None
+                cols: 1
+                row_default_height: 70 #root.height*0.2
+                height: self.minimum_height
+
+
+        MDRaisedButton:
+            halign: 'center'
+            pos_hint_x: .7
+            text :'volver a categorias'
+            on_release: root.cerrar_productoswid()
+
+
+<NuevoProButton>:
+
+    font_size: self.height*0.5
+    text: '+'
+    on_press: self.create_new_producto()
+
+
+
+<InsertProWid>:
+    hoy: ''
+    orientation: 'vertical'
+    canvas:
+        Color:
+            rgb: (172/255,165/255,163/255)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    MDLabel:
+        text: "Agregar Producto"
+        pos_hint: {'center_x':0.5}
+        halign: "center"
+        font_style: "Subtitle1"
+    MDLabel:
+        id: category_elid
+        text: app.el_idca
+        padding_x:150
+    MDFillRoundFlatButton:
+        text: "Nombre:"
+        size_hint: (0.2,.7)
+        pos_hint: {'center_x':0.2}
+        id: id_insert_Vp_Nom
+        on_release: root.voz_botonP('NombreP')
+
+    TextInput:
+        id: insertarproducto_Nombre
+        multiline: False
+        hint_text: 'Nombre Producto'
+        mode: "rectangle"
+        size_hint: (0.4,.7)
+        pos_hint: {'center_x':0.55,'center_y':0.2}
+
+    MDFillRoundFlatButton:
+        text: "Precio:"
+        size_hint: (0.2,.7)
+        pos_hint: {'center_x':0.2}
+        id: id_insert_Vp_Pre
+        on_release: root.voz_botonP('PrecioP')
+
+    TextInput:
+        id: insertarproducto_Precio
+        multiline: True
+        hint_text: 'Precio unitario'
+        mode: "rectangle"
+        size_hint: (0.4,.7)
+        pos_hint: {'center_x':0.55,'center_y':0.2}
+
+    MDFillRoundFlatButton:
+        text: "Cantidad:"
+        size_hint: (0.2,.7)
+        pos_hint: {'center_x':0.2}
+        id: id_insert_Vp_Can
+        on_release: root.voz_botonP('CantidadP')
+
+    TextInput:
+        id: insertarproducto_Cantidad
+        multiline: True
+        hint_text: 'Cantidad'
+        mode: "rectangle"
+        size_hint: (0.4,.7)
+        pos_hint: {'center_x':0.55,'center_y':0.2}
+
+    MDFillRoundFlatButton:
+        text: "Fecha:"
+        size_hint: (0.2,.7)
+        pos_hint: {'center_x':0.2}
+
+    TextInput:
+        id: insertarproducto_Fecha
+        multiline: True
+        hint_text: root.hoy
+        mode: "rectangle"
+        size_hint: (0.4,.7)
+        pos_hint: {'center_x':0.55,'center_y':0.2}
+
+
+    BoxLayout:
+        size_hint_y: 2
+    BoxLayout: # ---------- Crear Salir
+        Button:
+            text: 'Crear'
+            on_press: root.insertpro(); root.accion()
+        Button:
+            text: 'Salir'
+            on_release: root.back_to_dbw_pro()
+
+
+
+
+
+<UpdateProyeWid>:
+    orientation: 'vertical'
+    dataPro_id: ''
+    canvas:
+        Color:
+            rgb: (172/255,165/255,163/255)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    MDLabel:
+        text: "Actualizar Producto"
+        pos_hint: {'center_x':0.5}
+        halign: "center"
+        font_style: "Subtitle1"
+
+    MDLabel:
+        text: ' Nombre:'
+        padding_x: 150
+        padding_y: 20
+
+    TextInput:
+        id: insertarproducto_Nombre
+        multiline: False
+        hint_text: 'Nombre producto'
+        mode: "rectangle"
+        size_hint: (0.5,.7)
+        pos_hint: {'center_x':0.5,'center_y':0.4}
+
+    MDLabel: # ---------- Nombre
+        text: ' Precio:'
+        padding_x: 150
+        padding_y: 20
+    TextInput:
+        id: insertarproducto_Precio
+        multiline: True
+        hint_text: 'Precio unitario '
+        mode: "rectangle"
+        size_hint: (0.5,.7)
+        pos_hint: {'center_x':0.5,'center_y':0.4}
+
+    MDLabel: # ---------- Nombre
+        text: ' Cantidad:'
+        padding_x: 150
+        padding_y: 20
+    TextInput:
+        id: insertarproducto_Cantidad
+        multiline: True
+        hint_text: 'Cantidad  '
+        mode: "rectangle"
+        size_hint: (0.5,.7)
+        pos_hint: {'center_x':0.5,'center_y':0.4}
+
+    BoxLayout:
+        size_hint_y: 4
+    BoxLayout:
+        Button:
+            text: 'Actualizar'
+            on_press: root.update_data_Pro()
+        Button:
+            text: 'Eliminar'
+            on_press: root.delete_data_Pro()
+    Button: # ---------- Actualizar, Salir
+        text: 'Salir'
+        on_press: root.back_to_dbw_pro()

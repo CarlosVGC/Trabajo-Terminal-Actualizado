@@ -1,0 +1,94 @@
+<SettingsScreen>:
+    
+    FloatLayout:
+            
+        MDLabel:
+            pos_hint: {"x": .15,"top": .9 }
+            size_hint: (.5, .1)
+            text: "Modo Nocturno: "
+            haling: "center"
+            theme_text_color: "Primary"
+            
+        MDSwitch:
+            id: mode
+            pos_hint: {"x":.7,"top": .9 }
+            size_hint: (.2, .1)
+            on_active: root.cambiar_modo(*args)
+            
+        MDIconButton:
+            pos_hint: {"x": .15,"top": .7 }
+            size_hint: (.2, .1)
+            icon: "format-paint"
+            on_release: root.show_theme_picker()
+            
+        MDLabel:
+            id: temas
+            pos_hint: {"x": .4,"top": .7 }
+            size_hint: (.5,.1)
+            text: "Seleccione un tema"
+            
+        MDIconButton:
+            pos_hint: {"x": .15,"top": .6 }
+            size_hint: (.2, .1)
+            icon: "calendar"
+            on_release: root.show_date_picker()
+            
+        MDLabel:
+            id: fecha
+            pos_hint: {"x": .4,"top": .6 }
+            size_hint: (.5,.1)
+            text: "Seleccione una fecha"
+        
+        MDIconButton:
+            pos_hint: {"x": .15,"top": .5 }
+            size_hint: (.2, .1)
+            icon: "clock"
+            on_release: root.show_time_picker()
+            
+        MDLabel:
+            id: hora
+            pos_hint: {"x": .4,"top": .5 }
+            size_hint: (.5,.1)
+            text: "Hora a mostrar notificaciones"
+
+        MDIconButton:
+            pos_hint: {"x": .15,"top": .4 }
+            size_hint: (.2, .1)
+            icon: "file-upload-outline"
+            on_release: root.subir_archivo()
+
+        MDLabel:
+            id: subir
+            pos_hint: {"x": .4,"top": .4 }
+            size_hint: (.5,.1)
+            text: "Respaldar Inventario en Drive"
+
+        MDIconButton:
+            pos_hint: {"x": .15,"top": .3 }
+            size_hint: (.2, .1)
+            icon: "file-download-outline"
+            on_release: root.descargar_archivo()
+
+        MDLabel:
+            id: descargar
+            pos_hint: {"x": .4,"top": .3 }
+            size_hint: (.5,.1)
+            text: "Descargar Inventario desde Drive"
+
+        MDIconButton:
+            pos_hint: {"x": .15,"top": .2 }
+            size_hint: (.2, .1)
+            icon: "delete-alert"
+            on_release: root.borrar_archivo()
+
+        MDLabel:
+            id: eliminar
+            pos_hint: {"x": .4,"top": .2 }
+            size_hint: (.5,.1)
+            text: "Eliminar datos del Drive"
+            
+           
+        
+            
+        
+        
