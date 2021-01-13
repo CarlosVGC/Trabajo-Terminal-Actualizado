@@ -43,7 +43,14 @@ class ReporteGastos(Screen):
             on_release=lambda x: self.tablaproductos()
         )
 
+        self.buttonconsulta = MDFillRoundFlatButton(  # Boton para mostrar tabla
+            pos_hint={"x": .5, "y": .3},
+            size_hint=(.40, .1),
+            text="Consulta de prueba",
+            on_release=lambda x: self.prueba()
+        )
 
+        #self.add_widget(self.buttonconsulta)
 
 
         #self.add_widget(self.data_tables)#####
@@ -51,6 +58,9 @@ class ReporteGastos(Screen):
         self.add_widget(self.buttonEXP)
         self.add_widget(self.buttontabla)
         # self.buttonactualizar.bind(on_press=lambda x: self.ActualizaPrecio())
+
+
+
 
     def tablaproductos(self):
         self.data_tables = MDDataTable(  # TABLA QUE MUESTRA LOS PRODUCTOS Y SUS COSTOS

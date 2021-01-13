@@ -33,7 +33,8 @@ class Sugerencias(FloatLayout): #Clase que crea las sugerencias del carrusel
         
         self.botongustar = MDFillRoundFlatIconButton(pos_hint={"x": .05, "y": .05},
                                                 text = "Útil",
-                                                icon = "heart"
+                                                icon = "heart",
+                                                #on_release = print("Hola")
                                                 )
         
         self.botoncerrar = MDIconButton(pos_hint={"right": 1, "top": 1},
@@ -43,8 +44,8 @@ class Sugerencias(FloatLayout): #Clase que crea las sugerencias del carrusel
 
         self.add_widget(self.titulo)
         self.add_widget(self.imagen)
-        self.add_widget(self.botongustar)
-        self.add_widget(self.botoncerrar)
+        #self.add_widget(self.botongustar)
+        #self.add_widget(self.botoncerrar)
         
     def update_rect(self, *args):
         self.rect.pos = self.pos

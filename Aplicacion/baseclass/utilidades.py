@@ -11,7 +11,7 @@ import kivy.utils
 class Banner(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__()
-        
+
         with self.canvas.before:
             Color(rgb=(.9, .9, .9, 0.1)) #r g b transparencia
             self.rect = RoundedRectangle(radius=[(40.0,40.0),(40.0,40.0),(40.0,40.0),(40.0,40.0)])
@@ -156,4 +156,3 @@ class Banner(FloatLayout):
     def update_rect(self, *args):
         self.rect.pos = self.pos
         self.rect.size = self.size
-        

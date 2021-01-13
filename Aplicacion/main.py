@@ -31,9 +31,12 @@ from baseclass.inventario import *
 from baseclass.listacom import *
 from db_inv.db import *
 
+import os.path as path
+
+
 conexion_database(DB_PATH) # crea base de datos de inventario
 
-class DashBoard(Screen):#Pantalla de Convertidor de unidades
+class DashBoard(Screen):#Pantalla de Convertidor de unidades la primera que se muestra al abrir la aplicacion
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.app = MDApp.get_running_app()
@@ -49,8 +52,34 @@ class DashBoard(Screen):#Pantalla de Convertidor de unidades
         self.app.title = "Convertidor Unidades" #Se cambia el nombre de la pantalla
         self.MuestraNotificacionInicial()
 
+        if path.exists("conf.txt"):
+            print("Existe el archivo de configuracion")
 
-        
+        else:
+            lineasm = ["Green\n", "Light\n", "Normal\n"]
+            print("No existe el archivo de configuraciones")
+            open("conf.txt", "w").close()  # crea un archivo# código
+            print("Antes de dormir")
+            sleep(1)
+            print("Ejecutando despues de dormir")
+            archivo = open("conf.txt", "w")
+            for l in lineasm:
+                archivo.write(l)
+            archivo.close()
+
+        with open("conf.txt", "r") as archivo:
+            lista = [linea.rstrip() for linea in archivo]
+
+        self.app.theme_cls.primary_palette = lista[0]
+        self.app.theme_cls.theme_style = lista[1]
+
+        if lista[2] == "Baja":
+            self.app.theme_cls.primary_hue = "200"
+        elif lista[2] == "Media":
+            self.app.theme_cls.primary_hue = "500"
+        elif lista[2] == "Alta":
+            self.app.theme_cls.primary_hue = "900"
+
     def on_kv_post(self, base_widget): #Se lea el archivo kivy
         grid = self.ids["grid_utilidades"]
         '''
@@ -379,6 +408,7 @@ class FirstScreen(Screen): #Pantalla comparador de precios
     
     def on_pre_enter(self, *args):
         self.app.title = "Comparador de precios"
+
     pass
         
 class MyApp(MDApp):
