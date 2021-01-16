@@ -16,6 +16,7 @@ from kivymd.uix.dialog import MDDialog
 
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
+from kivymd.uix.snackbar import Snackbar
 
 class ReporteGastos(Screen):
     def __init__(self, **kwargs):
@@ -37,7 +38,7 @@ class ReporteGastos(Screen):
         )
 
         self.buttontabla = MDFillRoundFlatButton( #Boton para mostrar tabla
-            pos_hint={"x": .05, "y": .3},
+            pos_hint={"x": .3, "y": .3},
             size_hint=(.40, .1),
             text="Consultar Productos",
             on_release=lambda x: self.tablaproductos()
@@ -57,7 +58,65 @@ class ReporteGastos(Screen):
         self.add_widget(self.buttonPDF)
         self.add_widget(self.buttonEXP)
         self.add_widget(self.buttontabla)
+        #self.add_widget(self.buttonconsulta)
+
         # self.buttonactualizar.bind(on_press=lambda x: self.ActualizaPrecio())
+
+    def prueba(self):
+        print("Estoy en prueba")
+
+        APP_PATH = os.getcwd()
+        DB_PATH = APP_PATH + '/prueba.db'  # SE DEBE CAMBIAR EL NOMBRE AL NOMBRE DE LA BD FINAL
+        con = sqlite3.connect(DB_PATH)  # CONEXION A LA BD
+        cursor = con.cursor()  # CURSOR PARA EJECUTAR QUERYS
+
+        cantidades = []
+        cantidadfinal = []
+        nomproductos = []
+        nomproductofinal = []
+
+        cursor.execute("""SELECT CANTIDAD FROM PRODUCTOS """)
+        for a in cursor:
+
+            cantidades.append(list(a))
+
+        for cantidad in cantidades:
+
+            for elemento in cantidad:
+
+                cantidadfinal.append(int(elemento))
+
+        cursor.execute("""SELECT NOMBRE FROM PRODUCTOS """)
+        for a in cursor:
+            nomproductos.append(list(a))
+
+        for nomprod in nomproductos:
+            for elemento in nomprod:
+                nomproductofinal.append(elemento)
+
+        #print((cantidadfinal[1])>5)
+        #print(nomproductofinal[1])
+
+        print(nomproductofinal)
+        a = 0
+        cadena_escaso = 'Se te esta acabando:  '
+        for c in cantidadfinal:
+            #print(c > 4)
+            if c < 2:
+                print(f"Producto: {nomproductofinal[a]} con {cantidadfinal[a]}")
+                cadena_escaso += str(nomproductofinal[a]) +' tienes:'+ str(cantidadfinal[a]) + ' '
+                continue
+            a += 1
+        print(cadena_escaso)
+
+
+
+
+
+        
+
+
+
 
 
 
@@ -292,7 +351,60 @@ class ReporteGastos(Screen):
         file2.SetContentFile('ReporteGastos.pdf')
         file2.Upload()
 
+        # Informar que se ha subido el archivo
+        snackbar = Snackbar(text="Se ha realizado el respaldo del Reporte en Google Drive")
+        snackbar.show()
+
     def on_pre_enter(self, *args):
         """La función se ejecuta antes de ingresar a la clase Reporte de Gastos, la función actualiza el nombre  del
         modulo correspondiente"""
         self.app.title = "Reporte de Gastos"
+
+        #Muestra notificación de escaso
+        print("Estoy en pre enter")
+
+        APP_PATH = os.getcwd()
+        DB_PATH = APP_PATH + '/prueba.db'  # SE DEBE CAMBIAR EL NOMBRE AL NOMBRE DE LA BD FINAL
+        con = sqlite3.connect(DB_PATH)  # CONEXION A LA BD
+        cursor = con.cursor()  # CURSOR PARA EJECUTAR QUERYS
+
+        cantidades = []
+        cantidadfinal = []
+        nomproductos = []
+        nomproductofinal = []
+
+        cursor.execute("""SELECT CANTIDAD FROM PRODUCTOS """)
+        for a in cursor:
+            cantidades.append(list(a))
+
+        for cantidad in cantidades:
+
+            for elemento in cantidad:
+                cantidadfinal.append(int(elemento))
+
+        cursor.execute("""SELECT NOMBRE FROM PRODUCTOS """)
+        for a in cursor:
+            nomproductos.append(list(a))
+
+        for nomprod in nomproductos:
+            for elemento in nomprod:
+                nomproductofinal.append(elemento)
+
+        # print((cantidadfinal[1])>5)
+        # print(nomproductofinal[1])
+
+        print(nomproductofinal)
+        a = 0
+        cadena_escaso = 'Se te esta acabando:  '
+        for c in cantidadfinal:
+            # print(c > 4)
+            if c < 2:
+                print(f"Producto: {nomproductofinal[a]} con {cantidadfinal[a]}")
+                cadena_escaso += str(nomproductofinal[a]) + ' tienes:' + str(cantidadfinal[a]) + ' '
+                continue
+            a += 1
+
+        snackbar = Snackbar(text=cadena_escaso)
+        snackbar.show()
+
+

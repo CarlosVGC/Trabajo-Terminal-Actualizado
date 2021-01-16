@@ -12,6 +12,7 @@ from pydrive.drive import GoogleDrive
 from kivy.uix.image import Image
 
 from kivymd.uix.button import MDRectangleFlatButton
+from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.button import MDRaisedButton
 
 
@@ -254,7 +255,7 @@ class SettingsScreen(Screen):
         """Muestra la notificacion inicial cuando se inicia la aplicación, esta funcion se llama al inicializar la aplicacion y despliega la notificación"""
         print("Estoy en muestra notifica")
 
-        self.a = randint(1, 2)#
+        self.a = randint(1, 6)#
         print(self.a)
         if self.a == 1:
             notification.notify(title='Puedes personalizar el esquema de colores',
@@ -474,6 +475,10 @@ class SettingsScreen(Screen):
         file2.SetContentFile('database.db')
         file2.Upload()
 
+        #Informar que se ha subido
+        snackbar = Snackbar(text="Se ha realizado el respaldo")
+        snackbar.show()
+
     def descargar_archivo(self):
         print("descargando")
 
@@ -519,7 +524,11 @@ class SettingsScreen(Screen):
             print('title: %s, id: %s' % (file['title'], file['id']))
             if file['title'] == "database.db":
                 archivo = drive.CreateFile({'id': file['id']})
-                archivo.GetContentFile('database.db')  # Download file as 'catlove.png'.
+                archivo.GetContentFile('database.db')  # Download file as 'database.db'.
+
+        # Informar que se ha descargado el archivo
+        snackbar = Snackbar(text="Se ha recuperado el inventario")
+        snackbar.show()
 
     def borrar_archivo(self):
         print("borrando")
@@ -567,6 +576,10 @@ class SettingsScreen(Screen):
                 file.Delete()
             if file['title'] == "database.db":
                 file.Delete()
+
+        # Informar que se ha borrado el archivo
+        snackbar = Snackbar(text="Los datos contenidos en Google Drive han sido borrados")
+        snackbar.show()
 
 """
 Codigo que se podria utilizar posteriormente

@@ -9,6 +9,7 @@ from kivymd.uix.dialog import MDDialog
 from kivy.uix.popup import Popup
 import numpy as np
 import speech_recognition as sr
+from kivymd.uix.snackbar import Snackbar
 
 
 from db_inv.db import * #para conectarnos a la db
@@ -127,7 +128,58 @@ class Inventario(Screen):
 
 ##Definicion que cambia nombre de tool
     def on_pre_enter(self, **args):
-        self.app.title = "Inventario"
+        self.app.title = "Inventario" ####agregue
+        #############################
+        # Muestra notificación de escaso
+        print("Estoy en pre enter")
+
+        APP_PATH = os.getcwd()
+        DB_PATH = APP_PATH + '/prueba.db'  # SE DEBE CAMBIAR EL NOMBRE AL NOMBRE DE LA BD FINAL
+        con = sqlite3.connect(DB_PATH)  # CONEXION A LA BD
+        cursor = con.cursor()  # CURSOR PARA EJECUTAR QUERYS
+
+        cantidades = []
+        cantidadfinal = []
+        nomproductos = []
+        nomproductofinal = []
+
+        cursor.execute("""SELECT CANTIDAD FROM PRODUCTOS """)
+        for a in cursor:
+            cantidades.append(list(a))
+
+        for cantidad in cantidades:
+
+            for elemento in cantidad:
+                cantidadfinal.append(int(elemento))
+
+        cursor.execute("""SELECT NOMBRE FROM PRODUCTOS """)
+        for a in cursor:
+            nomproductos.append(list(a))
+
+        for nomprod in nomproductos:
+            for elemento in nomprod:
+                nomproductofinal.append(elemento)
+
+        # print((cantidadfinal[1])>5)
+        # print(nomproductofinal[1])
+
+        print(nomproductofinal)
+        a = 0
+        cadena_escaso = 'Se te esta acabando:  '
+        for c in cantidadfinal:
+            # print(c > 4)
+            if c < 2:
+                print(f"Producto: {nomproductofinal[a]} con {cantidadfinal[a]}")
+                cadena_escaso += str(nomproductofinal[a]) + ' tienes:' + str(cantidadfinal[a]) + ' '
+                continue
+            a += 1
+
+        snackbar = Snackbar(text=cadena_escaso)
+        snackbar.show()
+
+
+
+
 
 class DataWid_Cat(BoxLayout):
     def __init__(self, mainapp, **kwargs):

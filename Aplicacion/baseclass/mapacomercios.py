@@ -9,6 +9,7 @@ from kivy.uix.image import Image
 from kivymd.uix.textfield import MDTextFieldRect
 
 from kivymd.uix.label import MDLabel
+from kivymd.uix.snackbar import Snackbar
 
 class MapaComercios(Screen):
     """La Clase MapaComercios es la única clase que se ejecuta para el despliegue del mapa, como argumento recibe Screen, que es un Widget
@@ -910,3 +911,6 @@ class MapaComercios(Screen):
         """La función se ejecuta antes de ingresar a la clase Mapa Comercios, la función actualiza el nombre  del
         modulo correspondiente"""
         self.app.title = "Mapa Comercios"
+
+        snackbar = Snackbar(text="Utiliza el mapa de comercios para encontrar la localizacion de algun Chedraui, La Comer, Soriana o HEB")
+        snackbar.show()

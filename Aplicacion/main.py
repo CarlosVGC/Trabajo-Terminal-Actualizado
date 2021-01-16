@@ -31,7 +31,9 @@ from baseclass.inventario import *
 from baseclass.listacom import *
 from db_inv.db import *
 
+from kivymd.uix.snackbar import Snackbar
 import os.path as path
+
 
 
 conexion_database(DB_PATH) # crea base de datos de inventario
@@ -51,6 +53,11 @@ class DashBoard(Screen):#Pantalla de Convertidor de unidades la primera que se m
         le mostrarán al usuario"""
         self.app.title = "Convertidor Unidades" #Se cambia el nombre de la pantalla
         self.MuestraNotificacionInicial()
+
+        snackbar = Snackbar(text="Utiliza esta sección para convertir diferentes tipos de unidades")
+        snackbar.show()
+
+
 
         if path.exists("conf.txt"):
             print("Existe el archivo de configuracion")
@@ -117,7 +124,7 @@ class DashBoard(Screen):#Pantalla de Convertidor de unidades la primera que se m
         """Muestra la notificacion inicial cuando se inicia la aplicación, esta funcion se llama al inicializar la aplicacion y despliega la notificación"""
         print("Estoy en muestra notifica")
 
-        self.a = randint(1, 5)
+        self.a = randint(1, 15)
         print(self.a)
         if self.a == 1:
             notification.notify(title='Acerca del Convertidor de Unidades',
@@ -283,7 +290,7 @@ class FirstScreen(Screen): #Pantalla comparador de precios
 
     def MuestraNotificacionComparador(self):
         """Se muestra las notificaciones que se anexaron al modulo del comparador de precios"""
-        self.a = randint(1, 5)
+        self.a = randint(1, 6)
         print(self.a)
         if self.a == 1:
 
@@ -291,11 +298,15 @@ class FirstScreen(Screen): #Pantalla comparador de precios
                                 message='Puedes actualizar los precios de los productos pulsando el boton de Actualizar que se encuentra en'
                                         'la parte superior',
                                 timeout=20)
+            snackbar = Snackbar(text="Puedes actualizar los precios de los productos pulsando el boton de Actualizar que se encuentra en la parte superior")
+            snackbar.show()
 
         if self.a == 2:
             notification.notify(title='Visualización de los Precios',
                                 message='Los precios pueden ser consultados deslizando la tabla que se muestra al consultar alguna categoría',
                                 timeout=20)
+            snackbar = Snackbar(text="Los precios pueden ser consultados deslizando la tabla que se muestra al consultar alguna categoría")
+            snackbar.show()
 
         pass
 
@@ -408,6 +419,8 @@ class FirstScreen(Screen): #Pantalla comparador de precios
     
     def on_pre_enter(self, *args):
         self.app.title = "Comparador de precios"
+
+
 
     pass
         

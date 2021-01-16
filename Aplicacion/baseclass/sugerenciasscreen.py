@@ -5,6 +5,7 @@ from kivy.graphics import Color, RoundedRectangle
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDFillRoundFlatIconButton, MDIconButton
 from kivy.uix.image import Image
+from kivymd.uix.snackbar import Snackbar
 
 class Sugerencias(FloatLayout): #Clase que crea las sugerencias del carrusel
     def __init__(self, **kwargs):
@@ -90,6 +91,6 @@ class SugerenciasScreen(Screen):
 
     def on_pre_enter(self, *args):
         self.app.title = "Sugerencias"
-
-
+        snackbar = Snackbar(text="Regresa a esta seccion si deseas ver diferentes consejos")
+        snackbar.show()
 
